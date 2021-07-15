@@ -50,7 +50,7 @@ const Register = () => {
         alert("Email should have have @")
         return;
     }
-    if(data.mobile.length>9){
+    if(data.mobile.length<9){
         alert("Mobile number should have 10 numbers");
         return;
     }
