@@ -106,7 +106,7 @@ const Register = () => {
             </div> 
         </div>
         :<>
-            <div className="loginLogo">Registration Successful</div>
+            <div className="loginLogo1">Registration Successful</div>
             <div className="loginLeft">
                 <button className="loginRegisterButton" onClick={handleCreate}>Login</button>
             </div>

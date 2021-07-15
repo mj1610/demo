@@ -81,3 +81,13 @@
     font-weight: 500;
     cursor: pointer;
 }
+
+.loginLogo1{
+    font-size: 50px;
+    font-weight: 800;
+    color: #1775ee;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+}
