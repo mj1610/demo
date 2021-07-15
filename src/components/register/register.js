@@ -38,13 +38,26 @@ const Register = () => {
         alert("please fill all data");
         return;
     }
+    if((data.username).length<4){
+        alert("Username should be at least 5 characters")
+        return;
+    }
+    if((data.password).length<5){
+        alert("Length password should be more than 5 characters")
+        return;
+    }
+    if(!(data.email).includes("@")){
+        alert("Email should have have @")
+        return;
+    }
+    if(data.mobile.length>9){
+        alert("Mobile number should have 10 numbers");
+        return;
+    }
     if(data.password!== data.cPassword){
         alert("Password and Confirm Password Should be same");
         return;
     }
-    // if(localStorage.getItem('userData')===null) {
-    //     localStorage.setItem('userData','[{"name" : "mukul"}]');
-    // }
     const lastData = JSON.parse(localStorage.getItem('userData'));
     
     // filtering for checking if email is already exists or not!
