@@ -1,0 +1,35 @@
+.home{
+    height:50px;
+    width: 100%;
+    background-color: #1877f2;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    overflow: hidden;
+}
+
+.container{
+    width: 100%;
+    height: calc(100vh - 50px);
+    background-color: gray;
+    font-size: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn{
+    position: absolute;
+    right:10px;
+    top: 10px;
+    height: 30px;
+    padding:0 5px;   
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    border: 1px solid white;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
