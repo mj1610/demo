@@ -21,6 +21,10 @@ const Admin = () => {
     const data = JSON.parse(localStorage.getItem("userData"));
     setUsers(data);
   };
+
+  const onAccept = (id) => {
+    console.log(id)
+  }
   return (
     <div className="admin">
       <h1>Users those need to be reject from the list.</h1>
@@ -32,7 +36,7 @@ const Admin = () => {
             <td>Name</td>
             <td>Email</td>
             <td>Mobile</td>
-            <td>Reject</td>
+            <td>Reject/Accept</td>
         </tr>
       {users
         ? users.map((item, index) => (
@@ -40,7 +44,7 @@ const Admin = () => {
               <td>{item.name}</td>  
               <td>{item.email}</td>  
               <td>{item.mobile}</td> 
-              <td><button onClick={() => onReject(item.email)}>Reject</button></td>
+              <td><button onClick={() => onReject(item.email)}>Reject</button><button onClick={() => onAccept(item.email)}>Accept</button></td>
             </tr>
           ))
         : ""}

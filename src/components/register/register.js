@@ -28,35 +28,48 @@ const Register = () => {
     setData({ ...data, [name]: value });
   };
 
-  if(localStorage.getItem('userData')===null) {
-    localStorage.setItem('userData','[{"email": "m","password": "1","username": "m"}]');
+  if(localStorage.getItem('admin')===null) {
+    localStorage.setItem('admin','[{"email": "m","password": "1","username": "m"}]');
 }
 
+const regexEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   const handleSubmit = async (e) => {
     e.preventDefault();
     if(data.name==="" || data.username=== "" || data.email==="" || data.mobile==="" || data.address==="" || data.password==="" || data.cPassword===""){
         alert("please fill all data");
         return;
     }
-    if((data.username).length<4){
-        alert("Username should be at least 5 characters")
+    if((/^([A-Za-z]+[,.]?[ ]?|[a-z]+['-]?)+$/).test(data.name)===false){
+        alert("Please enter valid name");
         return;
     }
-    if((data.password).length<5){
-        alert("Length password should be more than 5 characters")
+    if((/^[A-Za-z][A-Za-z0-9]{5,10}$/).test(data.username)===false){
+        alert("Username should be valid should contain only characters and numbers with max 10 characters")
         return;
     }
-    if(!(data.email).includes("@")){
-        alert("Email should have have @")
+    if((/^[a-zA-Z0-9!@#$&()\\-`.+,"]{5,}$/).test(data.password)===false){
+        alert("Length password should be more than 5 characters and should not contain spaces")
         return;
     }
-    if(data.mobile.length<9){
-        alert("Mobile number should have 10 numbers");
+    if(regexEmail.test(data.email)===false){
+        alert("Email is not valid")
+        return;
+    }
+    if((/^[6-9][0-9]{9}$/).test(data.mobile)===false){
+        alert("Mobile number is not valid");
+        return;
+    }
+    if((/^[a-zA-Z0-9][a-zA-Z0-9. -_]{1,}/).test(data.address)===false){
+        alert("Address should be valid");
         return;
     }
     if(data.password!== data.cPassword){
         alert("Password and Confirm Password Should be same");
         return;
+    }
+
+    if(localStorage.getItem('userData')===null) {
+        localStorage.setItem('userData','[]');
     }
     const lastData = JSON.parse(localStorage.getItem('userData'));
     
