@@ -24,18 +24,12 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     //Admin login
-    const data = JSON.parse(localStorage.getItem("admin"));
-    // const datapending= JSON.parse(localStorage.getItem('userData'));
-    // console.log(datapending);
-    const filterData = data.filter(
-      (item) => (item.username || item.email) === email
-    );
-    if (filterData.length === 0) {
-      alert("invalid credentials");
-      return;
-    } else {
-      //Admin login
-      if (password === "1" && email === "m") {
+    if (password === "1" && email === "m") {
+      const data = JSON.parse(localStorage.getItem("admin"));
+      const filterData = data.filter(
+        (item) => (item.username || item.email) === email
+      );
+      // storing user for making it login and logout
         if (localStorage.getItem("userLoggedIn") === null) {
           localStorage.setItem("userLoggedIn", "[]");
         }
@@ -43,39 +37,53 @@ const Login = () => {
         loginData.push(filterData[0]);
         localStorage.setItem("userLoggedIn", JSON.stringify(loginData));
         setUser(filterData[0]);
+        
+      // storing user information
         if (localStorage.getItem("user") === null) {
           localStorage.setItem("user", "[]");
         }
         const userData = JSON.parse(localStorage.getItem("user"));
         userData.push(filterData[0]);
         localStorage.setItem("user", JSON.stringify(userData));
+    }
+    //Other user login
+    else {
+      const data = JSON.parse(localStorage.getItem("userData"));
+      const filterData = data.filter(
+        (item) => (item.username || item.email) === email
+      );
+      if(filterData.length===0){
+        alert("Invalid Credentials")
+        return;
       }
-      //Other user login
-      else {
-        const validPassword = await bcrypt.compare(
-          password,
-          filterData[0].password
-        );
-        if (!validPassword) {
-          alert("invalid credentials1");
+      const validPassword = await bcrypt.compare(
+        password,
+        filterData[0].password
+      );
+      if (!validPassword) {
+        alert("invalid credentials");
+        return;
+      }
+      if(filterData[0].status==="Pending" || filterData[0].status==="Rejected"){
+          alert("Wait until admin accept your profile");
           return;
-        } else {
-          if (localStorage.getItem("userLoggedIn") === null) {
+      }
+      if(filterData[0].status==="Accepted"){
+        if (localStorage.getItem("userLoggedIn") === null) {
             localStorage.setItem("userLoggedIn", "[]");
-          }
-          const loginData = JSON.parse(localStorage.getItem("userLoggedIn"));
-          loginData.push(filterData[0]);
-          localStorage.setItem("userLoggedIn", JSON.stringify(loginData));
-          setUser(filterData[0]);
+        }
+        const loginData = JSON.parse(localStorage.getItem("userLoggedIn"));
+        loginData.push(filterData[0]);
+        localStorage.setItem("userLoggedIn", JSON.stringify(loginData));
+        setUser(filterData[0]);
           if (localStorage.getItem("user") === null) {
-            localStorage.setItem("user", "[]");
+              localStorage.setItem("user", "[]");
           }
           const userData = JSON.parse(localStorage.getItem("user"));
           userData.push(filterData[0]);
           localStorage.setItem("user", JSON.stringify(userData));
-        }
       }
-    }
+    }  
   };
 
   return (

@@ -3,12 +3,13 @@ import "./admin.css";
 
 const Admin = () => {
   const [users, setUsers] = useState([]);
-
   const getUsers = () => {
-    const usersData = JSON.parse(localStorage.getItem("userData"));
-    const data = JSON.parse(localStorage.getItem("user"));
-    const fliterAdmin = usersData.filter(user => user.email !== data[0].email);
-    setUsers(fliterAdmin);
+    if (localStorage.getItem("userData") !== null) {
+      const usersData = JSON.parse(localStorage.getItem("userData"));
+      const data = JSON.parse(localStorage.getItem("user"));
+      const fliterAdmin = usersData.filter(user => user.email !== data[0].email);
+      setUsers(fliterAdmin);
+    }
   };
   useEffect(() => {
     getUsers();
@@ -16,14 +17,30 @@ const Admin = () => {
 
   const onReject = (id) => {
     let copy = [...users];
-    copy = copy.filter((item) => item.email !== id);
-    localStorage.setItem("userData", JSON.stringify(copy));
-    const data = JSON.parse(localStorage.getItem("userData"));
-    setUsers(data);
+    copy = copy.filter((item) => item.email === id);
+    const newData ={...copy[0],status:"Rejected"}
+    if (localStorage.getItem("userData") !== null) {
+      const data = JSON.parse(localStorage.getItem("userData"));
+      let filterData =[...data];
+      filterData = filterData.filter((item) => item.email !== id);
+      filterData.push(newData);
+      localStorage.setItem("userData", JSON.stringify(filterData));
+      setUsers(filterData);
+    }    
   };
 
   const onAccept = (id) => {
-    console.log(id)
+    let copy = [...users];
+    copy = copy.filter((item) => item.email === id);
+    const newData ={...copy[0],status:"Accepted"}
+    if (localStorage.getItem("userData") !== null) {
+      const data = JSON.parse(localStorage.getItem("userData"));
+      let filterData =[...data];
+      filterData = filterData.filter((item) => item.email !== id);
+      filterData.push(newData);
+      localStorage.setItem("userData", JSON.stringify(filterData));
+      setUsers(filterData);
+    }    
   }
   return (
     <div className="admin">
@@ -36,6 +53,7 @@ const Admin = () => {
             <td>Name</td>
             <td>Email</td>
             <td>Mobile</td>
+            <td>Status</td>
             <td>Reject/Accept</td>
         </tr>
       {users
@@ -44,7 +62,8 @@ const Admin = () => {
               <td>{item.name}</td>  
               <td>{item.email}</td>  
               <td>{item.mobile}</td> 
-              <td><button onClick={() => onReject(item.email)}>Reject</button><button onClick={() => onAccept(item.email)}>Accept</button></td>
+              <td>{item.status}</td>
+              <td><button onClick={() => onReject(item.email)} disabled={item.status ==="Rejected"}>Reject</button><button onClick={() => onAccept(item.email)} disabled={item.status ==="Accepted"}>Accept</button></td>
             </tr>
           ))
         : ""}

@@ -14,6 +14,7 @@ const Register = () => {
         address:"",
         password:"",
         cPassword:"",
+        status:"Pending"
     })
     let history = useHistory();
 
@@ -44,7 +45,7 @@ const regexEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@
         return;
     }
     if((/^[A-Za-z][A-Za-z0-9]{5,10}$/).test(data.username)===false){
-        alert("Username should be valid should contain only characters and numbers with max 10 characters")
+        alert("Username should contain only characters and numbers with 7-10 characters")
         return;
     }
     if((/^[a-zA-Z0-9!@#$&()\\-`.+,"]{5,}$/).test(data.password)===false){
@@ -98,7 +99,8 @@ const regexEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@
         mobile:data.mobile,
         address:data.address,
         password:hash,
-        cPassword:cHash
+        cPassword:cHash,
+        status:"Pending"
     }]
     lastData.push(hashData[0])
     setLogin(true);
@@ -108,7 +110,6 @@ const regexEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@
     return (
         <>
         {
-        // JSON.parse(localStorage.getItem('userLoggedIn'))===null &&
          !login ?
         <div className="login">
             <div className="loginWrapper">
